@@ -77,8 +77,14 @@ const getPokemonData = (url) => {
 
 
             data.abilities.forEach(function (ability) {
-                $('#pokemonAbilities').append(`<li class="">${ability.ability.name}</li>`);
+                $('#pokemonAbilities').append(`<li class="">${ability.ability.name} <button type="button" class="btn btn-success btn-sm btnPokemonAbility mb-2 ml-3" data-url-other-pokemons ="${ability.ability.url}">También tienen esta habilidad</button></li>`);
             });
+
+            $('.btnPokemonAbility').click(function () {
+                const urlAbility = $(this).attr('data-url-other-pokemons');
+                getAbilities(urlAbility);
+            });
+            
 
             for (let i = 0; i < 5; i++){
                 $('#pokemonMoves').append(
@@ -135,6 +141,20 @@ const getDamage = (url) => {
 
 };
 
+const getAbilities = (url) => {
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => { 
+            $('#modalPokemonAbilityLabel').text(data.name);
+            $('#other-pokemons').text('');
+
+            data.pokemon.forEach(function(p) {
+                $('#other-pokemons').append(`<li class="">${p.pokemon.name}</li>`);
+            })
+
+            $('#modalPokemonAbility').modal('show');
+        });
+};
 
 const showPokemon = (pokemon) => {
     $('#pokedex').append(`
@@ -147,5 +167,4 @@ const showPokemon = (pokemon) => {
     </div>
     `);
 getPhoto(pokemon.url, pokemon.name);
-};
-
+}

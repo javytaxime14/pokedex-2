@@ -28,13 +28,27 @@ h1 {
 
 .modal-content {
     background: linear-gradient(to right, #e9e49d, #e9e651);
-    border: 1px solid #d68e07;
+    border: 1px solid #f5a004;
+}
+
+#modalPokemonDamageRelation .modal-content {
+    background: linear-gradient(to right, #e6aeae, #ee5c5c);
+    border: 1px solid #f50404;
 }
 
 #modalPokemonDamageRelation li {
     list-style-image: url('pokeball\(1\).png');
-
 }
+
+#modalPokemonAbility .modal-content {
+    background: linear-gradient(to right, #e7a8a8, #e95151);
+    border: 1px solid #f50404;
+}
+
+#modalPokemonAbility li {
+    list-style-image: url('friend-ball.png');
+}
+
 .card-title {
     font-family: 'Stick No Bills', sans-serif;
 }
