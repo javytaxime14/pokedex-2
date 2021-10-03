@@ -24,7 +24,7 @@
         <button id="getMorePokemons" class="btn btn-light mt-3 mb-3 ml-auto" data-next="">¡Quiero ver más Pokémon!</button>
         </div>
           
-          <!-- Modal -->
+          <!-- Pokemon Types Modal -->
           <div class="modal fade" id="modalPokemon" tabindex="-1" role="dialog" aria-labelledby="modalPokemonLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -39,6 +39,27 @@
                   <p class="ml-2"><strong class="title">Generations: </strong><span id="pokemonGenerations"></span></p>
                   <p class="ml-2"><strong class="title">Abilities: </strong><span id="pokemonAbilities"></span></p>
                   <p class="ml-2"><strong class="title">Moves: </strong><span id="pokemonMoves"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Damage Relations Modal -->
+          <div class="modal fade" id="modalPokemonDamageRelation" tabindex="-1" role="dialog" aria-labelledby="modalPokemonDamageRelationLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p class="ml-2"><strong class="title">Débil contra (le causan mucho daño):</strong><span id="double_damage_from"></span></p>
+                  <p class="ml-2"><strong class="title">Fuerte contra (les hace mucho daño): </strong><span id="double_damage_to"></span></p>
+                  <p class="ml-2"><strong class="title">Le causan daño medio: </strong><span id="half_damage_from"></span></p>
+                  <p class="ml-2"><strong class="title">Les hace daño medio a: </strong><span id="half_damage_to"></span></p>
+                  <p class="ml-2"><strong class="title">No le causan ningún daño: </strong><span id="no_damage_from"></span></p>
+                  <p class="ml-2"><strong class="title">No causa daño contra tipo: </strong><span id="no_damage_to"></span></p>
                 </div>
               </div>
             </div>

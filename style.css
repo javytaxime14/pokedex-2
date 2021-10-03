@@ -27,9 +27,14 @@ h1 {
 }
 
 .modal-content {
-    background: linear-gradient(to right, #50c9c3, #96deda);
+    background: linear-gradient(to right, #e9e49d, #e9e651);
+    border: 1px solid #d68e07;
 }
 
+#modalPokemonDamageRelation li {
+    list-style-image: url('pokeball\(1\).png');
+
+}
 .card-title {
     font-family: 'Stick No Bills', sans-serif;
 }

@@ -15,92 +15,126 @@ $(document).ready(function () {
 });
 
 const getPhoto = (url, name) => {
-    $.ajax({
-        url: url,
-        method: 'GET',
-        success: function (response) {
-            console.log('data pokemon', response);
-            console.log(
-                'foto pokemon => ' + response.sprites.other.dream_world.front_default
-            );
+    
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => { 
             $(`#img_${name}`).attr(
                 'src', 
-                response.sprites.other.dream_world.front_default
+                data.sprites.other.dream_world.front_default
             );
-        },
-    });
+        });
 };
 
 const getPokemons = (url) => {
     console.log('obteniendo pokemones desde ' + url);
 
-    $.ajax({
-        url: url, 
-        method: 'GET',
-
-        success: function (response) {
-            const pokemons = response.results;
-            const urlMorePokemons = response.next;
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => { 
+            const pokemons = data.results;
+            const urlMorePokemons = data.next;
 
             $('#getMorePokemons').attr('nextPageUrl', urlMorePokemons);
-            
             pokemons.forEach(function (pokemon) {
                 showPokemon(pokemon);
             });
 
             $('.btnGetDataPokemon').click(function () {
-                console.log('click en boton');
                 const urlPokemon = $(this).attr('data-url-pokemon');
                 getPokemonData(urlPokemon);
             });
-        },
-        error: function(error) {
-            console.log(error);
-        },
-    });
+        });
+
 };
 
 const getPokemonData = (url) => {
     console.log('obteniendo datos de ' + url);
 
-    $.ajax({
-        url: url,
-        method: 'GET',
-        success: function (response) {
-            console.log('data pokemon', response);
-            $('#modalPokemonLabel').text(response.name);
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => { 
+            $('#modalPokemonLabel').text(data.name);
             $('#pokemonType').text('');
             $('#pokemonGenerations').text('');
             $('#pokemonAbilities').text('');
             $('#pokemonMoves').text('');
 
-
-            response.types.forEach(function (type) {
-                $('#pokemonType').append(`<li class="">${type.type.name}</li>`);
+            data.types.forEach(function (type) {
+                $('#pokemonType').append(`
+                <li class="">${type.type.name} <button type="button" class="btn btn-secondary btn-sm btnDamageRelation mb-2 ml-3" data-url-damage="${type.type.url}">Ver relaciones de daño</button></li>
+                `);
             });
 
-            response.game_indices.forEach(function (generation) {
+            $('.btnDamageRelation').click(function () {
+                const urlDamage = $(this).attr('data-url-damage');
+                getDamage(urlDamage);
+            });
+
+            data.game_indices.forEach(function (generation) {
                 $('#pokemonGenerations').append(`<li class="">${generation.version.name}</li>`);
             });
 
 
-            response.abilities.forEach(function (ability) {
+            data.abilities.forEach(function (ability) {
                 $('#pokemonAbilities').append(`<li class="">${ability.ability.name}</li>`);
             });
 
             for (let i = 0; i < 5; i++){
                 $('#pokemonMoves').append(
-                    `<li class="">${response.moves[i].move.name}</li>`
+                    `<li class="">${data.moves[i].move.name}</li>`
                 );
             }
 
             $('#modalPokemon').modal('show');
-        },
-        error: function(error) {
-            console.log(error);
-        },
-    });
+
+        });
+
+    
 };
+
+const getDamage = (url) => {
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => { 
+
+            $('#modalPokemonDamageRelationLabel').text(data.name);
+            $('#double_damage_from').text('');
+            $('#double_damage_to').text('');
+            $('#half_damage_from').text('');
+            $('#half_damage_to').text('');
+            $('#no_damage_from').text('');
+            $('#no_damage_to').text('');
+
+            data.damage_relations.double_damage_from.forEach(function(damage) {
+                $('#double_damage_from').append(`<li class="">${damage.name}</li>`);
+            });
+
+            data.damage_relations.double_damage_to.forEach(function(damage) {
+                $('#double_damage_to').append(`<li class="">${damage.name}</li>`);
+            });
+
+            data.damage_relations.half_damage_from.forEach(function(damage) {
+                $('#half_damage_from').append(`<li class="">${damage.name}</li>`);
+            });
+
+            data.damage_relations.half_damage_to.forEach(function(damage) {
+                $('#half_damage_to').append(`<li class="">${damage.name}</li>`);
+            });
+
+            data.damage_relations.no_damage_from.forEach(function(damage) {
+                $('#no_damage_from').append(`<li class="">${damage.name}</li>`);
+            });
+
+            data.damage_relations.no_damage_to.forEach(function(damage) {
+                $('#no_damage_to').append(`<li class="">${damage.name}</li>`);
+            });
+    
+            $('#modalPokemonDamageRelation').modal('show');
+        });
+
+};
+
 
 const showPokemon = (pokemon) => {
     $('#pokedex').append(`
